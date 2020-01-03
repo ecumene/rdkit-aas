@@ -1,11 +1,16 @@
-from flask import Flask
+from flask import Flask, make_response
 from flask import request
 from chemistry import smiles_to_mol
 app = Flask(__name__)
 
+def plainify(stuff):
+    response = make_response(stuff, 200)
+    response.mimetype = "text/plain"
+    return response
+
 @app.route("/")
 def welcome():
-    return """
+    return plainify("""
 
     <h2>RDKIT as a service</h2>
 
@@ -15,16 +20,16 @@ def welcome():
     processing and features.
     </pre>
 
-    """
+    """)
 
 @app.route("/smiles/<string:smiles_str>")
 def smiles(smiles_str):
     if request:
-        return smiles_to_mol(smiles_str, **request.args)
+        return plainify(smiles_to_mol(smiles_str, **request.args))
     else:
-        return smiles_to_mol(smiles_str)
+        return plainify(smiles_to_mol(smiles_str))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
 
 

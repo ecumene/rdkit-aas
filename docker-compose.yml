@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  rdkit:
+    networks:
+      - service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/opt/
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+networks:
+  service:
