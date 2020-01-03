@@ -65,8 +65,6 @@ RUN apt-get update \
 
 RUN pip3 install --no-cache-dir flask
 
-ENV FLASK_APP manage.py
-
 # Copy rdkit installation from rdkit-build-env
 COPY --from=rdkit-build-env /usr/lib/libRDKit* /usr/lib/
 COPY --from=rdkit-build-env /usr/lib/cmake/rdkit/* /usr/lib/cmake/rdkit/
@@ -74,4 +72,4 @@ COPY --from=rdkit-build-env /usr/share/RDKit /usr/share/RDKit
 COPY --from=rdkit-build-env /usr/include/rdkit /usr/include/rdkit
 COPY --from=rdkit-build-env /usr/lib/python3/dist-packages/rdkit /usr/lib/python3/dist-packages/rdkit
 
-CMD ["python3", "/opt/manage.py"]
+CMD ["python3", "/opt/routing.py"]
